@@ -1,0 +1,63 @@
+@charset "utf-8";
+
+#logo-name {
+    color: #000;
+}
+
+.titulo1 {
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+}
+
+header figure {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header {
+    background: #FFEBF4;
+    display: flex;
+    width: 1280px;
+    height: 72px;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header nav ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+header nav ul li {
+    padding: 6px 14px;
+    list-style: none;
+}
+
+.boton-principal {
+    border-radius: 60px;
+    background: #E85C8A;
+    color: #ffffff;
+}
+
+
+.boton-principal-no-fondo {
+    border-radius: 60px;
+    color: #5A2E3B;
+
+}
+
+.boton-tipografia {
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
