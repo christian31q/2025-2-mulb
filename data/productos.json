@@ -1,0 +1,45 @@
+{
+		"categoria": [
+			{
+				"nombre": "Pescados",
+				"producto": [
+					{
+						"name": "Bacalao",
+						"precio": "10000",
+						"desc": "Descripciòn producto 1",
+						"cantidad": "5",
+						"imagenes": "imagen/foto1.jpg"
+					},
+					{
+						"name": "Bagre",
+						"precio": "5000",
+						"desc": "Descripciòn producto 2",
+						"cantidad": "6",
+						"imagenes": [
+							"imagen/foto2.jpg",
+							"imagen/foto6.jpg"
+						]
+					}
+				]
+			},
+			{
+				"nombre": "Frutas",
+				"producto": [
+					{
+						"name": "Banano",
+						"precio": "2000",
+						"desc": "Descripciòn producto 4",
+						"cantidad": "5",
+						"imagenes": "imagen/foto4.jpg"
+					},
+					{
+						"name": "Pera",
+						"precio": "5000",
+						"desc": "Descripciòn producto 25",
+						"cantidad": "6",
+						"imagenes": "imagen/foto5.jpg"
+					}
+				]
+			}
+		]
+}

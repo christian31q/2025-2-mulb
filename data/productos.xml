@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <categoria>
+        <nombre>Pescados</nombre>
+    <producto>
+        <name>Bacalao</name>
+        <precio>10000</precio>
+        <desc>Descripciòn producto 1</desc>
+        <cantidad>5</cantidad>
+        <imagenes>imagen/foto1.jpg</imagenes>
+    </producto>
+    <producto>
+        <name>Bagre</name>
+        <precio>5000</precio>
+        <desc>Descripciòn producto 2</desc>
+        <cantidad>6</cantidad>
+        <imagenes>imagen/foto2.jpg</imagenes>
+        <imagenes>imagen/foto6.jpg</imagenes>
+    </producto>
+</categoria>
+
+    <categoria> <nombre>Frutas</nombre>
+    <producto>
+        <name>Banano</name>
+        <precio>2000</precio>
+        <desc>Descripciòn producto 4</desc>
+        <cantidad>5</cantidad>
+        <imagenes>imagen/foto4.jpg</imagenes>
+    </producto>
+    <producto>
+        <name>Pera</name>
+        <precio>5000</precio>
+        <desc>Descripciòn producto 25</desc>
+        <cantidad>6</cantidad>
+        <imagenes>imagen/foto5.jpg</imagenes>
+    </producto>
+    </categoria>
+</root>

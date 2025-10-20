@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+body{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0px;
+}
 #logo-name {
     color: #000;
 }
@@ -60,4 +66,13 @@ header nav ul li {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
