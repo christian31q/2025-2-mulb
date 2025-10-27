@@ -1,41 +1,55 @@
 window.onload = function() {
     const form = document.querySelector('#formulario');
     ajaxRecibir('api/get/usuarios.php');
+
     form.onsubmit = function(event) {
         event.preventDefault(); // Evita el envío del formulario
+
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-        validarDatos(data);
-        ajaxSubmit('api/post/registro.php', data);
-       
+
+        const imagenInput = form.querySelector('input[type="file"][name="imagen"]');
+
+        if (imagenInput && imagenInput.files.length > 0) {
+            const file = imagenInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // e.target.result contiene el Base64 (con encabezado data:image/...;base64,)
+                const base64ImageString = e.target.result.split(',')[1]; // quitamos encabezado
+                data.imagen = base64ImageString;
+                ajaxSubmit('api/post/registro.php', data);
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            // No hay imagen, solo enviamos los datos normales
+            ajaxSubmit('api/post/registro.php', data);
+        }
     };
 };
 
 function ajaxSubmit(url, data) {
-    const xhr = new XMLHttpRequest(); // Crear una nueva instancia de XMLHttpRequest
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
-        
-        if (xhr.readyState === 4) { // Verificar si la solicitud se ha completado
-            if (xhr.status === 200) { // Verificar si la respuesta es exitosa
-                respuestaServer(JSON.parse(xhr.responseText));
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log('Respuesta del servidor:', xhr.responseText);
             } else {
                 console.error('Error al enviar los datos');
             }
         }
     };
-    data = JSON.stringify(data);
-    console.log(data);
-    /*data = data.replace(/\\'/g, "'"); // Reemplazar las comillas simples escapadas
-    blankspace = /\s/g;
-    data = data.replace(blankspace, "%20"); // Reemplazar espacios en blanco escapados
-    */
-   xhr.open('POST', url, true); // Configurar la solicitud POST
+    const jsonData = JSON.stringify(data);
+    console.log('Enviando:', jsonData);
+
+    xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.send(data); // Enviar los datos en formato JSON
+    xhr.send(jsonData);
 }
 
 function ajaxRecibir(url) {
-    const xhr = new XMLHttpRequest(); // Crear una nueva instancia de XMLHttpRequest
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
@@ -50,25 +64,10 @@ function ajaxRecibir(url) {
     xhr.send();
 }
 
-function respuestaServer(respuesta) {
-   /* console.log('Respuesta del servidor:', respuesta.message);*/
-    const respuestaDiv = document.getElementById('respuesta');
-    respuestaDiv.textContent = respuesta.message;
-    // Aquí puedes manejar la respuesta del servidor según tus necesidades
-}
-
-function validarDatos(data) {
-    // Aquí puedes agregar validaciones adicionales si es necesario
-    if (!data.email || !data.email.includes('@')) {
-        const respuestaDiv = document.getElementById('respuesta');
-        respuestaDiv.textContent = 'Por favor, ingresa un correo electrónico válido.';
-        throw new Error('Correo electrónico inválido');
-    }
-}
-
 function respuestaServerData(respuesta) {
     const listaUsuarios = document.getElementById('lista-usuarios');
-    listaUsuarios.innerHTML = ''; // Limpiar la lista existente
+    listaUsuarios.innerHTML = '';
+
     if (respuesta.status === 'success') {
         respuesta.data.forEach(function(usuario) {
             const li = document.createElement('li');

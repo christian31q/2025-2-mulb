@@ -1,40 +1,33 @@
 <?php
-include_once '../connectbd.php';
-$data = json_decode(file_get_contents('php://input'), true);
-// Aquí puedes procesar los datos recibidos en $data
+// Read raw POST data correctly
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+// Get data from JSON (if present)
 $nombre = $data['nombre'] ?? '';
-$edad = $data['edad'] ?? '';
-$direccion = $data['direccion'] ?? '';
-$correo = $data['email'] ?? '';
-$telefono = $data['telefono'] ?? '';
+$imagen = $data['imagen'] ?? '';
 
-if (empty($nombre) || empty($edad) || empty($direccion) || empty($correo) || empty($telefono)) {
-    echo json_encode(
-        array(
-            "status" => "error",
-            "message" => "Faltan datos obligatorios"
-        )
-    );
-    exit;
-}
+// If 'imagen' is base64 data, you can decode and save it:
+if (!empty($imagen)) {
+    // Decode base64 image
+    $decodedImage = base64_decode($imagen);
 
-$sql = "INSERT INTO `usuarios` (`nombre`, `edad`, `direccion`, `correo`, `telefono`) VALUES ('$nombre', '$edad', '$direccion', '$correo', '$telefono');";
+    // Create image directory if it doesn't exist
+    $targetDir = "../../imagenes/";
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0755, true);
+    }
 
-if($connect->query($sql) === TRUE) {
-    echo json_encode(
-    array(
-        "status" => "success",
-        "message" => "Registro completado"
-    )
-); 
+    // Generate a filename (you can change this logic)
+    $fileName = $targetDir . uniqid('img_') . ".png";
+
+    // Save image to disk
+    if (file_put_contents($fileName, $decodedImage)) {
+        echo "Imagen guardada correctamente en: " . $fileName;
+    } else {
+        echo "Error al guardar la imagen.";
+    }
 } else {
-    echo json_encode(
-    array(
-        "status" => "error",
-        "message" => "Error al registrar"
-    )
-);
+    echo "No se recibió ninguna imagen.";
 }
-
-$connect->close();
 ?>
