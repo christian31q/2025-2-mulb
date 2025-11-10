@@ -14,6 +14,9 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $hash = $row['contrasena'];
     if (password_verify($contrasena, $hash)) {
+        session_start();
+        $_SESSION['nombre'] = $row['nombre'];
+        $_SESSION['correo'] = $row['correo'];
         echo json_encode(
             array(
                 "status" => "success",
